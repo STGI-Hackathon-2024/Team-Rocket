@@ -41,7 +41,9 @@ app.post('/login', (req, res) =>{
     }
 );
 
+app.get('/metrics', require('./metrics'));
 
+app.get('/logs', require('./logs'));
 
 
 app.listen(3000, () => {
