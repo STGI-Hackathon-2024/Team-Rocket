@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ username, onLogout }) => {
   return (
     <div className="flex justify-center items-center p-4">
-      <div className='w-[80%] flex justify-between items-center'>
+      <div className='xl:w-[70%] w-[80%] flex justify-between items-center'>
         <div className="text-3xl font-bold bg-clip-text text-transparent bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-rose-300 via-slate-200 to-amber-200">
           Dashboard
         </div>

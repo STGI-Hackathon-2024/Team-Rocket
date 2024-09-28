@@ -50,7 +50,7 @@ const Metrics = () => {
 
   return (
     <div className="flex justify-center p-4">
-      <div className="w-[80%]">
+      <div className="w-[80%] lg:w-[60%] xl:w-[55%]">
         <Line data={data} options={options} />
       </div>
     </div>
