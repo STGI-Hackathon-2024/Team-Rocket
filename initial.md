@@ -1,10 +1,10 @@
 Team Rocket
 
 Members: 
-Akshaj Paintola
-Arin Kothari
-Dhawal Arora
-Ritish Tejpal
+Akshaj Paintola,
+Arin Kothari,
+Dhawal Arora,
+Ritish Tejpal,
 Yuvraj Singh Birdi
 
 Problem Statement: Build Your Own Observability Platform
