@@ -16,7 +16,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className='bg-gradient-to-tr from-zinc-900 to-gray-700 flex justify-center h-screen items-center'>
+    <div className='tracking-wide bg-gradient-to-r from-black to-gray-800 flex justify-center h-screen items-center'>
       <div className='flex w-[70%] justify-center '>
         <form className=' flex flex-col rounded-xl gap-3 px-16 pb-4 bg-gradient-to-r from-zinc-200 to-stone-300' onSubmit={handleLogin}>
           <h1 className='text-center font-bold text-4xl p-4 pt-6'>Login</h1>
@@ -28,7 +28,7 @@ const Login = ({ onLogin }) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="px-2 py-1 rounded text-black bg-transparent border border-gray-600"
+              className="px-2 py-1 rounded text-black  bg-transparent border border-gray-600"
             />
           </div>
           <div className='flex flex-col'>
@@ -55,7 +55,7 @@ const Login = ({ onLogin }) => {
           <div className='flex justify-center items-center pb-4'>
             <button
               type="submit"
-              className='mt-4 bg-gradient-to-tr from-zinc-900 to-gray-700 font-semibold  text-white p-2 rounded-xl hover:bg-gray-200 px-6'>
+              className='mt-4 bg-gradient-to-tr from-zinc-900 to-gray-700  text-white p-2 rounded-xl hover:bg-gray-200 px-6'>
               Continue
             </button>
           </div>
