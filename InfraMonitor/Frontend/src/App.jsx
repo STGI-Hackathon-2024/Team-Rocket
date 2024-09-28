@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import {
   createBrowserRouter,
@@ -8,33 +8,55 @@ import {
   Navigate
 } from "react-router-dom";
 import Login from './components/Login';
-import Dashboard from './components/Dashboard'; // You will create this component
+import Dashboard from './components/Dashboard';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Default to not logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState(''); // State to store username
 
-  // Router setup with login check
+  // Load the login state from localStorage when the app starts
+  useEffect(() => {
+    const storedLoginState = localStorage.getItem('isLoggedIn');
+    const storedUsername = localStorage.getItem('username'); // Get the stored username
+    if (storedLoginState === 'true' && storedUsername) {
+      setIsLoggedIn(true);
+      setUsername(storedUsername); // Set the username from localStorage
+    }
+  }, []);
+
+  // Handler for login
+  const handleLogin = (user) => {
+    setIsLoggedIn(true);
+    setUsername(user); // Set the logged-in username
+    localStorage.setItem('isLoggedIn', 'true'); // Save login state
+    localStorage.setItem('username', user); // Save username in localStorage
+  };
+
+  // Handler for logout
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername(''); // Clear the username
+    localStorage.setItem('isLoggedIn', 'false'); // Clear login state
+    localStorage.removeItem('username'); // Clear the username from localStorage
+  };
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        {/* If the user is not logged in, redirect them to login */}
         <Route
           path="/"
-          element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+          element={isLoggedIn ? <Dashboard username={username} onLogout={handleLogout} /> : <Navigate to="/login" />}
         />
         <Route
           path="/login"
-          element={isLoggedIn ? <Navigate to="/" /> : <Login />}
+          element={isLoggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />}
         />
       </>
     )
   );
 
   return (
-    <>
-      {/* Provide the routes */}
-      <RouterProvider router={router} />
-    </>
+    <RouterProvider router={router} />
   );
 }
 

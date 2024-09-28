@@ -3,20 +3,20 @@ import React, { useState } from 'react';
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
     // Placeholder login logic; replace with actual authentication
     if (username === 'admin' && password === 'password') {
-      onLogin();
+      onLogin(username); // Pass the username to the parent component
     } else {
       alert('Invalid credentials');
     }
   };
 
   return (
-    <div className='tracking-wide bg-gradient-to-r from-black to-gray-800 flex justify-center h-screen items-center'>
+    <div className='tracking-wide bg-gradient-to-r from-black to-gray-900 flex justify-center h-screen items-center'>
       <div className='flex w-[70%] justify-center '>
         <form className=' flex flex-col rounded-xl gap-3 px-16 pb-4 bg-gradient-to-r from-zinc-200 to-stone-300' onSubmit={handleLogin}>
           <h1 className='text-center font-bold text-4xl p-4 pt-6'>Login</h1>
@@ -28,25 +28,25 @@ const Login = ({ onLogin }) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="px-2 py-1 rounded text-black  bg-transparent border border-gray-600"
+              className="px-2 py-1 rounded-lg text-black  bg-transparent border border-gray-600"
             />
           </div>
           <div className='flex flex-col'>
             <label className='font-semibold' htmlFor="password">Password</label>
             <input
               id="password"
-              type={showPassword ? "text" : "password"} // Toggle between text and password type
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="px-2 py-1 rounded text-black bg-transparent border border-gray-600"
+              className="px-2 py-1 rounded-lg text-black bg-transparent border border-gray-600"
             />
             <div className="flex items-center mt-2">
               <input
                 type="checkbox"
                 id="showPassword"
                 checked={showPassword}
-                onChange={() => setShowPassword(!showPassword)} // Toggle visibility
+                onChange={() => setShowPassword(!showPassword)}
                 className="mr-2"
               />
               <label htmlFor="showPassword" className='text-sm'>Show Password</label>
