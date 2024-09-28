@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors"; // Import cors
 
+import logsRouter from './routes/logs.js';
+import metricsRouter from './routes/metrics.js';
+
 dotenv.config(); // Load environment variables
 
 const app = express();
@@ -67,9 +70,9 @@ app.post("/login", (req, res) => {
 	}
 });
 
-app.get('/metrics', require('./metrics'));
+app.get('/metrics', metricsRouter);
 
-app.get('/logs', require('./logs'));
+app.get('/logs', logsRouter);
 
 // Protected dashboard route (only accessible with a valid token)
 app.get("/dashboard", authenticateToken, (req, res) => {

@@ -1,9 +1,8 @@
 // Initiates the metrics route
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-
-const getMetrics = require('../controller/metricsController');
+import getMetrics from '../controller/metricsController.js';
 
 router.get('/', getMetrics);
 
-module.exports = router;
+export default router;

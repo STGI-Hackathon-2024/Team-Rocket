@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from "axios";
 
 const getLogs = async (req, res) => {
     try{
@@ -17,4 +17,4 @@ const getLogs = async (req, res) => {
     }
 }
 
-module.exports = getLogs;
+export default getLogs;
