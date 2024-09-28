@@ -1,20 +1,27 @@
-import axios from "axios";
+import axios from 'axios';
 
-const getLogs = async (req, res) => {
-    try{
-        const response  = await axios.get('http://localhost:9090/logs'); // change to loki
-        const data = response.data.data.result;
-        const logs = data.map((log) => {
-            return {
-                log: log.log,
-                value: log.value
-            };
+const INFLUXDB_URL = process.env.INFLUXDB_URL; // Your InfluxDB endpoint
+
+export const getLogs = async (req, res) => {
+    try {
+        // Fetch logs from InfluxDB
+        const response = await axios.get(`${INFLUXDB_URL}/api/v2/query`, {
+            params: {
+                org: process.env.INFLUXDB_ORG,
+                bucket: process.env.INFLUXDB_BUCKET,
+                // Adjust your Flux query as needed
+                q: 'from(bucket:"your_bucket") |> range(start: -1h)',
+            },
+            headers: {
+                Authorization: `Token ${process.env.INFLUXDB_TOKEN}`,
+                'Content-Type': 'application/json',
+            }
         });
-        res.json(logs);
-    }
-    catch(error){
-        res.status(500).send('Log Server Error'); // change to loki
-    }
-}
 
-export default getLogs;
+        const logs = response.data; // Process this as necessary
+        res.json(logs); // Send logs as JSON response
+    } catch (error) {
+        console.error('Error fetching logs:', error);
+        res.status(500).json({ message: "Failed to fetch logs." });
+    }
+};
