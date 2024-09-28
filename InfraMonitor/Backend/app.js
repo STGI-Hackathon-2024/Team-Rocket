@@ -58,7 +58,6 @@ app.post("/login", (req, res) => {
 		const token = jwt.sign({ username }, process.env.JWT_SECRET, {
 			expiresIn: "1h",
 		});
-
 		return res.json({
 			message: "Authentication successful!",
 			token: token,
@@ -67,6 +66,10 @@ app.post("/login", (req, res) => {
 		return res.status(400).json({ message: "Invalid username or password" });
 	}
 });
+
+app.get('/metrics', require('./metrics'));
+
+app.get('/logs', require('./logs'));
 
 // Protected dashboard route (only accessible with a valid token)
 app.get("/dashboard", authenticateToken, (req, res) => {
