@@ -10,7 +10,7 @@ export const getLogs = async (req, res) => {
                 org: process.env.INFLUXDB_ORG,
                 bucket: process.env.INFLUXDB_BUCKET,
                 // Adjust your Flux query as needed
-                q: 'from(bucket:"your_bucket") |> range(start: -1h)',
+                q: `from(bucket:${bucket}) |> range(start: -1h)`,
             },
             headers: {
                 Authorization: `Token ${process.env.INFLUXDB_TOKEN}`,

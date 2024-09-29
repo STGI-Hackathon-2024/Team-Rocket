@@ -2,7 +2,12 @@ import axios from "axios";
 
 const getMetrics = async (req, res) => {
     try{
-        const response  = await axios.get('http://localhost:9090/metrics');
+        const response  = await axios.get(`${process.env.PROMETHEUS_URL}/api/v1/query`, {
+            params: {
+                query: 'up'
+            }
+        });
+        
         const data = response.data.data.result;
         const metrics = data.map((metric) => {
             return {
