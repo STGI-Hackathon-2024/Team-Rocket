@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      containers:
+        - name: app1
+          image: docker.io/library/pyeditorial-master-web:latest  # Ensure the image has the app's code
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          command: ["./prod_start.sh"]
+          envFrom:
+            - configMapRef:
+                name: app1-configmap
+            - secretRef:
+                name: postgres-secret
+      # Remove volumes section and volumeMounts if you're not using code-volume
+      # volumeMounts:
+      #   - name: code-volume
+      #     mountPath: /code

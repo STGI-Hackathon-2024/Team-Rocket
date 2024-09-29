@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres
+    prometheus: postgres # This label can help Prometheus identify the resource
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13.2
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_DB
+              value: abc_db
+          livenessProbe:
+            exec:
+              command:
+                - "pg_isready"
+                - "-U"
+                - "postgres"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+        - name: postgres-exporter
+          image: prometheuscommunity/postgres-exporter:v0.13.1  
+          env:
+            - name: DATA_SOURCE_NAME
+              value: "postgresql://postgres:password@localhost:5432/abc_db?sslmode=disable"
+          ports:
+            - containerPort: 9187 # Prometheus exporter listens on port 9187
+
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9187
+            initialDelaySeconds: 15
+            periodSeconds: 10
+  # Optional: if persistence is not required, remove these volume mounts
+  # volumeMounts:
+  #   - name: postgres-storage
+  #     mountPath: /var/lib/postgresql/data
